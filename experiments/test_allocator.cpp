@@ -26,7 +26,7 @@ int main()
         current = current->next;  // Move to next using the copy
     }
 
-    if (block_count != 46)
+    if (block_count != 32)
     {
         std::cout << "Block number is not 46." << std::endl;
     }

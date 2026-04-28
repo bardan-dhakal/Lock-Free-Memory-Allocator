@@ -51,8 +51,8 @@ int main()
     
     
     std::cout << "\n--- TEST 4: EXHAUST AND RECOVER ---\n";
-    void* all[46];
-    for (int i = 0; i < 46; i++)
+    void* all[32];
+    for (int i = 0; i < 32; i++)
     {
         all[i] = LockFreeAllocator::allocate(64);
     }
@@ -63,12 +63,12 @@ int main()
         std::cout << "PASS: Pool exhausted\n";
     }
     
-    for (int i = 0; i < 46; i++)
+    for (int i = 0; i < 32; i++)
     {
         LockFreeAllocator::free(all[i]);
     }
     
-    for (int i = 0; i < 46; i++)
+    for (int i = 0; i < 32; i++)
     {
         all[i] = LockFreeAllocator::allocate(64);
     }

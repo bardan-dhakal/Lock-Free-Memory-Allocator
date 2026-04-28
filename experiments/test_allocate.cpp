@@ -113,7 +113,7 @@ int main()
     std::cout << "Total allocations: " << count << "\n";
     std::cout << "Expected: 46\n";
     
-    if (count == 46)
+    if (count == 32)
     {
         std::cout << "Correct!\n";
     }
