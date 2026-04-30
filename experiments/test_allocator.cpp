@@ -28,7 +28,7 @@ int main()
 
     if (block_count != 32)
     {
-        std::cout << "Block number is not 46." << std::endl;
+        std::cout << "Block number is not 32." << std::endl;
     }
 
     return 0;

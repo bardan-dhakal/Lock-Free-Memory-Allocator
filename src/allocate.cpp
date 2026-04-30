@@ -21,7 +21,6 @@ namespace LockFreeAllocator
                 
             if (expected_head == nullptr)
             {
-                std::cout << "Free List Head is Null\n";
                 return nullptr;
             }
  
