@@ -39,7 +39,6 @@ namespace LockFreeAllocator
         try 
         {
             raw_mem = allocate_raw_memory();
-            std::cout << "Raw memory successfully allocated at " << raw_mem << std::endl;
         }
 
         catch (const std::runtime_error& e)

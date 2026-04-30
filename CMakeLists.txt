@@ -7,11 +7,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # Thread support
 find_package(Threads REQUIRED)
 
-# Optimization flag for benchmarking
-target_compile_options(allocator PRIVATE -02)
-
 #Downloading and building google benchmark
-inclue(FetchContent)
+include(FetchContent)
 FetchContent_Declare(
     googlebenchmark
     GIT_REPOSITORY https://github.com/google/benchmark.git
@@ -20,10 +17,6 @@ FetchContent_Declare(
 set(BENCHMARK_ENABLE_TESTING     OFF CACHE BOOL "" FORCE)
 set(BENCHMARK_ENABLE_GTEST_TESTS OFF CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googlebenchmark)
-
-add_executable(gbenchmark benchmarks/gbenchmark.cpp)
-target_link_libraries(gbenchmark PRIVATE allocator benchmark::benchmark Threads::Threads)
-target_compile_options(gbenchmark PRIVATE -02)
 
 
 # Source files
@@ -37,14 +30,25 @@ include_directories(include)
 
 # Library
 add_library(allocator ${ALLOCATOR_SOURCES})
+
+# Optimization flag for benchmarking
+target_compile_options(allocator PRIVATE -O2)
+
 target_link_libraries(allocator Threads::Threads)
 
 # Test executables
 add_executable(test_threads experiments/test_threads.cpp)
 target_link_libraries(test_threads allocator Threads::Threads)
 
-add_executable(benchmark benchmarks/benchmark.cpp)
-target_link_libraries(benchmark allocator Threads::Threads)
+add_executable(test_free experiments/test_free.cpp)
+target_link_libraries(test_free allocator Threads::Threads)
+
+add_executable(gbenchmark benchmarks/gbenchmark.cpp)
+target_link_libraries(gbenchmark PRIVATE allocator benchmark::benchmark Threads::Threads)
+target_compile_options(gbenchmark PRIVATE -O2)
+
+add_executable(my_benchmark benchmarks/benchmark.cpp)
+target_link_libraries(my_benchmark allocator Threads::Threads)
 
 # Test target
 enable_testing()
