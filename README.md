@@ -23,6 +23,7 @@ Run benchmarks:
 Run tests:
 ./build/test_threads
 ./build/test_free
+```
 
 ## Key Implementation
 ```cpp
