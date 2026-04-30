@@ -50,13 +50,19 @@ serializes all threads through a single lock: only one thread can allocate at a 
 rest block and wait. Under contention, the cost of mutex acquisition and thread context-switching
 dominates throughput.
 
-  Benchmark                                threads:1     threads:2     threads:4     threads:8
+**Latency (ns/op) — lower is better**
 
-  BM_LockFreeAllocator  (ns/op)            16.4 ns       57.0 ns       73.7 ns       76.0 ns
-  BM_MutexAllocator     (ns/op)            27.3 ns      112.0 ns      114.0 ns      191.0 ns
+| Benchmark            | 1 Thread | 2 Threads | 4 Threads | 8 Threads |
+|----------------------|---------:|----------:|----------:|----------:|
+| LockFree Allocator   |  16.4 ns |   57.0 ns |   73.7 ns |   76.0 ns |
+| Mutex Allocator      |  27.3 ns |  112.0 ns |  114.0 ns |  191.0 ns |
 
-  BM_LockFreeAllocator  (ops/sec)          61.1M         17.6M         13.6M         13.2M
-  BM_MutexAllocator     (ops/sec)          36.6M          9.0M          8.8M          5.2M
+**Throughput (ops/sec) — higher is better**
+
+| Benchmark            | 1 Thread | 2 Threads | 4 Threads | 8 Threads |
+|----------------------|---------:|----------:|----------:|----------:|
+| LockFree Allocator   |    61.1M |     17.6M |     13.6M |     13.2M |
+| Mutex Allocator      |    36.6M |      9.0M |      8.8M |      5.2M |
 
 The lock-free allocator outperforms the mutex-based allocator across all thread counts. Notice
 the latency profile: the mutex allocator's per-operation cost grows from 27 ns at 1 thread to
