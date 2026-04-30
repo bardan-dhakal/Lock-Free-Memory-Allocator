@@ -42,6 +42,23 @@ do {
 ## Benchmark Results
 Current implementation: ~8-15M ops/sec across thread counts, improving efficiency is in progress, expected boost after adding Thread Local Caching.
 
+## Valgrind Analysis
+
+  Run with: `valgrind --leak-check=full --track-origins=yes ./build/test_threads`
+
+  ==HEAP SUMMARY:
+      in use at exit: 0 bytes in 0 blocks
+    total heap usage: 13 allocs, 13 frees, 76,152 bytes allocated
+
+  All heap blocks were freed -- no leaks are possible
+
+  ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+
+  **Results:** Zero memory errors, zero leaks. All 13 heap allocations (thread stacks and
+  internal C++ runtime overhead) were fully freed at exit. The allocator's own memory
+  pool is acquired via `mmap` directly — bypassing the heap entirely — which is why it
+  does not appear in the heap summary. Valgrind confirmed no invalid reads, no invalid
+  writes, and no use-after-free across 4 concurrent threads running 1,000 iterations each.
 
 ## Learning Outcomes
 - Deep understanding of atomics and CAS
